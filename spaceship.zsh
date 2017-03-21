@@ -381,7 +381,7 @@ spaceship_golang_version() {
   [[ $SPACESHIP_GOLANG_SHOW == false ]] && return
 
   # If there are Go-specific files in current directory
-  [[ -d Godeps || -f glide.yaml || -n *.go(#qN) ]] || return
+  [[ -d Godeps || -f glide.yaml || -n *.go(#qN) || -f vendor/vendor.json ]] || return
 
   command -v go > /dev/null 2>&1 || return
 
