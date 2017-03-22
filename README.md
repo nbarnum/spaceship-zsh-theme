@@ -56,13 +56,13 @@ For correct work you will first need:
 Installing using **curl**:
 
 ```
-curl -o - https://raw.githubusercontent.com/denysdovhan/spaceship-zsh-theme/master/install.sh | zsh
+curl -o - https://raw.githubusercontent.com/nbarnum/spaceship-zsh-theme/master/install.sh | zsh
 ```
 
 Installing using **wget**:
 
 ```
-wget -O - https://raw.githubusercontent.com/denysdovhan/spaceship-zsh-theme/master/install.sh | zsh
+wget -O - https://raw.githubusercontent.com/nbarnum/spaceship-zsh-theme/master/install.sh | zsh
 ```
 
 If you have problems, follow these instructions:

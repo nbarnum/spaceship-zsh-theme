@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 #
 # Author: Denys Dovhan, denysdovhan.com
-# https://github.com/denysdovhan/spaceship-zsh-theme
+# https://github.com/nbarnum/spaceship-zsh-theme
 
 # Source ~/.zshrc because we need oh-my-zsh variables
 source "$HOME/.zshrc"
@@ -21,7 +21,7 @@ function message() {
 }
 
 # Files
-REMOTE='https://raw.githubusercontent.com/denysdovhan/spaceship-zsh-theme/master/spaceship.zsh'
+REMOTE='https://raw.githubusercontent.com/nbarnum/spaceship-zsh-theme/master/spaceship.zsh'
 THEME="$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
 # If themes folder isn't exist, then make it
