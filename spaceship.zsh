@@ -385,7 +385,7 @@ spaceship_golang_version() {
 
   command -v go > /dev/null 2>&1 || return
 
-  local go_version=$(go version | grep --colour=never -oE '[[:digit:]].[[:digit:]]')
+  local go_version=$(go version | grep --colour=never -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+')
   # Do not show prefix if prefixes are disabled
   [[ ${SPACESHIP_PREFIX_SHOW} == true ]] && echo -n "%B${SPACESHIP_PREFIX_GOLANG}%b" || echo -n ' '
 
