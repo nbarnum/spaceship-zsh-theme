@@ -151,7 +151,7 @@ spaceship_git_unstaged() {
 # Untracked files.
 # Check for untracked files.
 spaceship_git_untracked() {
-  if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+  if [ -n "$(git ls-files --others --exclude-standard 2>/dev/null)" ]; then
     echo -n "${SPACESHIP_GIT_UNTRACKED}"
   fi
 }
