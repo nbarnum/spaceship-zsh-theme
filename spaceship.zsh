@@ -20,6 +20,7 @@ SPACESHIP_PREFIX_HOST="${SPACESHIP_PREFIX_HOST:-" at "}"
 SPACESHIP_PREFIX_DIR="${SPACESHIP_PREFIX_DIR:-" in "}"
 SPACESHIP_PREFIX_GIT="${SPACESHIP_PREFIX_GIT:-" on "}"
 SPACESHIP_PREFIX_ENV_DEFAULT="${SPACESHIP_PREFIX_ENV_DEFAULT:-" via "}"
+SPACESHIP_PREFIX_KUBECTL="${SPACESHIP_PREFIX_KUBECTL:-" k8s "}"
 SPACESHIP_PREFIX_NVM="${SPACESHIP_PREFIX_NVM:-$SPACESHIP_PREFIX_ENV_DEFAULT}"
 SPACESHIP_PREFIX_RUBY="${SPACESHIP_PREFIX_RUBY:-$SPACESHIP_PREFIX_ENV_DEFAULT}"
 SPACESHIP_PREFIX_SWIFT="${SPACESHIP_PREFIX_SWIFT:-$SPACESHIP_PREFIX_ENV_DEFAULT}"
@@ -40,6 +41,10 @@ SPACESHIP_GIT_UNPUSHED="${SPACESHIP_GIT_UNPUSHED:-⇡}"
 # TIME
 SPACESHIP_TIME_SHOW="${SPACESHIP_TIME_SHOW:-false}"
 SPACESHIP_TIME_12HR="${SPACESHIP_TIME_12HR:-false}"
+
+# KUBECTL
+SPACESHIP_KUBECTL_SHOW="${SPACESHIP_KUBECTL_SHOW:-true}"
+SPACESHIP_KUBECTL_SYMBOL="${SPACESHIP_KUBECTL_SYMBOL:-⛴️}"
 
 # NVM
 SPACESHIP_NVM_SHOW="${SPACESHIP_NVM_SHOW:-true}"
@@ -219,6 +224,22 @@ spaceship_git_status() {
     echo -n "$indicators"
     echo -n "%{$reset_color%}"
   fi
+}
+
+# Kubectl
+# Show current kubeconfig context
+spaceship_kubectl_status() {
+  [[ $SPACESHIP_KUBECTL_SHOW == false ]] && return
+
+  [[ -f ~/.kube/config && -f /usr/bin/kubectl ]] || return
+
+  local kubectl_context=$(kubectl config current-context 2>/dev/null)
+
+  [[ ${SPACESHIP_PREFIX_SHOW} == true ]] && echo -n "%B${SPACESHIP_PREFIX_KUBECTL}%b" || echo -n ' '
+
+  echo -n "%{$fg_bold[blue]%}"
+  echo -n "${SPACESHIP_KUBECTL_SYMBOL}  ${kubectl_context}"
+  echo -n "%{$reset_color%}"
 }
 
 # Virtual environment.
@@ -452,6 +473,7 @@ spaceship_prompt() {
   spaceship_host
   spaceship_current_dir
   spaceship_git_status
+  spaceship_kubectl_status
   spaceship_nvm_status
   spaceship_ruby_version
   spaceship_xcode_version
