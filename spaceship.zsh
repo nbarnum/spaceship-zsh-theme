@@ -15,7 +15,7 @@ SPACESHIP_PROMPT_SEPARATE_LINE="${SPACESHIP_PROMPT_SEPARATE_LINE:-true}"
 SPACESHIP_PROMPT_TRUNC="${SPACESHIP_PROMPT_TRUNC:-3}"
 
 # PREFIXES
-SPACESHIP_PREFIX_SHOW="${SPACEHIP_PREFIX_SHOW:-true}"
+SPACESHIP_PREFIX_SHOW="${SPACESHIP_PREFIX_SHOW:-true}"
 SPACESHIP_PREFIX_HOST="${SPACESHIP_PREFIX_HOST:-" at "}"
 SPACESHIP_PREFIX_DIR="${SPACESHIP_PREFIX_DIR:-" in "}"
 SPACESHIP_PREFIX_GIT="${SPACESHIP_PREFIX_GIT:-" on "}"
@@ -44,7 +44,7 @@ SPACESHIP_TIME_12HR="${SPACESHIP_TIME_12HR:-false}"
 
 # KUBECTL
 SPACESHIP_KUBECTL_SHOW="${SPACESHIP_KUBECTL_SHOW:-true}"
-SPACESHIP_KUBECTL_SYMBOL="${SPACESHIP_KUBECTL_SYMBOL:-⛴️}"
+SPACESHIP_KUBECTL_SYMBOL="${SPACESHIP_KUBECTL_SYMBOL:-☸}"
 
 # NVM
 SPACESHIP_NVM_SHOW="${SPACESHIP_NVM_SHOW:-true}"
@@ -233,12 +233,17 @@ spaceship_kubectl_status() {
 
   [[ -f ~/.kube/config && -f /usr/bin/kubectl ]] || return
 
-  local kubectl_context=$(kubectl config current-context 2>/dev/null)
+  local kube_cluster=$(kubectl config view --minify=true --output=jsonpath='{.clusters[0].name}')
+  cur_namespace="$(kubectl config view --minify=true -o=jsonpath="{.contexts[0].context.namespace}")"
+  # If the namespace comes back empty set it default.
+  if [[ -z "${cur_namespace}" ]]; then
+    cur_namespace="default"
+  fi
 
   [[ ${SPACESHIP_PREFIX_SHOW} == true ]] && echo -n "%B${SPACESHIP_PREFIX_KUBECTL}%b" || echo -n ' '
 
   echo -n "%{$fg_bold[blue]%}"
-  echo -n "${SPACESHIP_KUBECTL_SYMBOL}  ${kubectl_context}"
+  echo -n "${SPACESHIP_KUBECTL_SYMBOL} ${kube_cluster}/${cur_namespace}"
   echo -n "%{$reset_color%}"
 }
 
