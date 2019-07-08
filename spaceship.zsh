@@ -231,7 +231,9 @@ spaceship_git_status() {
 spaceship_kubectl_status() {
   [[ $SPACESHIP_KUBECTL_SHOW == false ]] && return
 
-  [[ -f ~/.kube/config && -f /usr/bin/kubectl ]] || return
+  path_to_kubectl=$(which kubectl)
+
+  [[ -f ~/.kube/config && -x "$path_to_kubectl" ]] || return
 
   local kube_cluster=$(kubectl config view --minify=true --output=jsonpath='{.clusters[0].name}')
   cur_namespace="$(kubectl config view --minify=true -o=jsonpath="{.contexts[0].context.namespace}")"
